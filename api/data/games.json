@@ -1,0 +1,183 @@
+[
+    {
+      "id": 1,
+      "team1": "Manchester City",
+      "team2": "Red Star Belgrade",
+      "date": "2023-09-19T20:00:00Z"
+    },
+    {
+      "id": 2,
+      "team1": "Paris Saint-Germain",
+      "team2": "Borussia Dortmund",
+      "date": "2023-09-19T20:00:00Z"
+    },
+    {
+      "id": 3,
+      "team1": "Barcelona",
+      "team2": "Royal Antwerp",
+      "date": "2023-09-19T20:00:00Z"
+    },
+    {
+      "id": 4,
+      "team1": "Lazio",
+      "team2": "Atletico Madrid",
+      "date": "2023-09-19T20:00:00Z"
+    },
+    {
+      "id": 5,
+      "team1": "Feyenoord",
+      "team2": "Celtic",
+      "date": "2023-09-19T20:00:00Z"
+    },
+    {
+      "id": 6,
+      "team1": "Shakhtar Donetsk",
+      "team2": "Porto",
+      "date": "2023-09-19T20:00:00Z"
+    },
+    {
+      "id": 7,
+      "team1": "Young Boys",
+      "team2": "RB Leipzig",
+      "date": "2023-09-19T17:45:00Z"
+    },
+    {
+      "id": 8,
+      "team1": "AC Milan",
+      "team2": "Newcastle United",
+      "date": "2023-09-19T17:45:00Z"
+    },
+    {
+      "id": 9,
+      "team1": "Real Madrid",
+      "team2": "Union Berlin",
+      "date": "2023-09-20T17:45:00Z"
+    },
+    {
+      "id": 10,
+      "team1": "Bayern Munich",
+      "team2": "Manchester United",
+      "date": "2023-09-20T20:00:00Z"
+    },
+    {
+      "id": 11,
+      "team1": "Sevilla",
+      "team2": "Lens",
+      "date": "2023-09-20T20:00:00Z"
+    },
+    {
+      "id": 12,
+      "team1": "Arsenal",
+      "team2": "PSV Eindhoven",
+      "date": "2023-09-20T20:00:00Z"
+    },
+    {
+      "id": 13,
+      "team1": "Braga",
+      "team2": "Napoli",
+      "date": "2023-09-20T20:00:00Z"
+    },
+    {
+      "id": 14,
+      "team1": "Real Sociedad",
+      "team2": "Inter Milan",
+      "date": "2023-09-20T20:00:00Z"
+    },
+    {
+      "id": 15,
+      "team1": "Benfica",
+      "team2": "Salzburg",
+      "date": "2023-09-20T20:00:00Z"
+    },
+    {
+      "id": 16,
+      "team1": "Galatasaray",
+      "team2": "Copenhagen",
+      "date": "2023-09-20T20:00:00Z"
+    },
+    {
+      "id": 17,
+      "team1": "Real Madrid",
+      "team2": "Napoli",
+      "date": "2023-10-03T20:00:00Z"
+    },
+    {
+      "id": 18,
+      "team1": "Inter Milan",
+      "team2": "Benfica",
+      "date": "2023-10-03T20:00:00Z"
+    },
+    {
+      "id": 19,
+      "team1": "Manchester United",
+      "team2": "Galatasaray",
+      "date": "2023-10-03T20:00:00Z"
+    },
+    {
+      "id": 20,
+      "team1": "PSV Eindhoven",
+      "team2": "Sevilla",
+      "date": "2023-10-03T20:00:00Z"
+    },
+    {
+      "id": 21,
+      "team1": "Lens",
+      "team2": "Arsenal",
+      "date": "2023-10-03T20:00:00Z"
+    },
+    {
+      "id": 22,
+      "team1": "Borussia Dortmund",
+      "team2": "AC Milan",
+      "date": "2023-10-04T20:00:00Z"
+    },
+    {
+      "id": 23,
+      "team1": "Atletico Madrid",
+      "team2": "Feyenoord",
+      "date": "2023-10-04T20:00:00Z"
+    },
+    {
+      "id": 24,
+      "team1": "Celtic",
+      "team2": "Lazio",
+      "date": "2023-10-04T20:00:00Z"
+    },
+    {
+      "id": 25,
+      "team1": "Shakhtar Donetsk",
+      "team2": "Barcelona",
+      "date": "2023-10-04T20:00:00Z"
+    },
+    {
+      "id": 26,
+      "team1": "Porto",
+      "team2": "Antwerp",
+      "date": "2023-10-04T20:00:00Z"
+    },
+    {
+      "id": 27,
+      "team1": "RB Leipzig",
+      "team2": "Manchester City",
+      "date": "2023-10-04T20:00:00Z"
+    },
+    {
+      "id": 28,
+      "team1": "Newcastle United",
+      "team2": "Paris Saint-Germain",
+      "date": "2023-10-04T20:00:00Z"
+    },
+    {
+      "id": 29,
+      "team1": "Barcelona",
+      "team2": "Shakhtar Donetsk",
+      "date": "2023-10-25T17:45:00Z"
+    },
+    {
+      "id": 30,
+      "team1": "Manchester City",
+      "team2": "RB Leipzig",
+      "date": "2023-10-25T20:00:00Z"
+    }
+  ]
+  
