@@ -9,7 +9,15 @@ module.exports = function (sequelize, DataTypes) {
       type: DataTypes.INTEGER,
       allowNull: false,
     },
-    prediction: {
+    winner:{
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    goals:{
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    comment: {
       type: DataTypes.STRING,
       allowNull: false,
     }
