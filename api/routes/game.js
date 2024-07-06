@@ -18,6 +18,7 @@ router.get('/games', (req, res) => {
     const gameId = parseInt(req.params.id, 10);
     const game = games.find(g => g.id === gameId);
     
+    
     if (game) {
       res.json(game);
     } else {

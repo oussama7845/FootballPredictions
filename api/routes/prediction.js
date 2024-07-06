@@ -8,9 +8,14 @@ const path = require('path');
 const env = process.env.NODE_ENV || 'development';
 const config = require(path.join(__dirname, '..', 'config', 'config.json'))[env];
 require('dotenv').config();
+var authenticateUser = require('../middleware/authorisation');
+
+
+
+
 
 // Get all predictions
-router.get('/predictions', async (req, res) => {
+router.get('/predictions', authenticateUser, async (req, res) => {
   try {
     const predictions = await Prediction.findAll();
     return res.status(200).json(predictions);
@@ -21,7 +26,7 @@ router.get('/predictions', async (req, res) => {
 });
 
 // Get all prediction by ID User
-router.get('/predictions/:id', async (req, res) => {
+router.get('/predictions/:id', authenticateUser, async (req, res) => {
   try {
     const prediction = await Prediction.findAll({where: { UserId :req.params.id }});
     if (prediction) {
@@ -36,7 +41,7 @@ router.get('/predictions/:id', async (req, res) => {
 });
 
 // Create a new prediction
-router.post('/createPredictions', async (req, res) => {
+router.post('/createPredictions',authenticateUser,  async (req, res) => {
   const { idGame, idUser, winner, goals, comment } = req.body;
 
   try {
@@ -57,7 +62,7 @@ router.post('/createPredictions', async (req, res) => {
 });
 
 // Update a prediction
-router.put('/predictions/:id', async (req, res) => {
+router.put('/predictions/:id', authenticateUser , async (req, res) => {
   const { idGame, idUser, winner, goals, comment  } = req.body;
 
   try {
@@ -82,10 +87,10 @@ router.put('/predictions/:id', async (req, res) => {
 });
 
 // Delete a prediction
-router.delete('/predictions/:id', async (req, res) => {
+router.delete('/predictions/:id', authenticateUser , async (req, res) => {
   try {
     const existingPrediction = await Prediction.findByPk(req.params.id);
-    if (existingPrediction) {
+    if (existingPrediction ) {
       await existingPrediction.destroy();
       return res.status(200).json({ message: 'Prediction deleted successfully' });
     } else {

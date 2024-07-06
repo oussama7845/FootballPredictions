@@ -4,8 +4,10 @@
     <div v-show="show" class="popup-container">
       <div class="popup-header">
         <p class="popup-title">C'est quoi votre prédiction ?</p>
-        <svg class="close-button" @click="closePopup" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24">
-          <path fill="currentColor" d="m12 13.4l-4.9 4.9q-.275.275-.7.275t-.7-.275t-.275-.7t.275-.7l4.9-4.9l-4.9-4.9q-.275-.275-.275-.7t.275-.7t.7-.275t.7.275l4.9 4.9l4.9-4.9q.275-.275.7-.275t.7.275t.275.7t-.275.7L13.4 12l4.9 4.9q.275.275.275.7t-.275.7t-.7.275t-.7-.275z"/>
+        <svg class="close-button" @click="closePopup" xmlns="http://www.w3.org/2000/svg" width="32" height="32"
+          viewBox="0 0 24 24">
+          <path fill="currentColor"
+            d="m12 13.4l-4.9 4.9q-.275.275-.7.275t-.7-.275t-.275-.7t.275-.7l4.9-4.9l-4.9-4.9q-.275-.275-.275-.7t.275-.7t.7-.275t.7.275l4.9 4.9l4.9-4.9q.275-.275.7-.275t.7.275t.275.7t-.275.7L13.4 12l4.9 4.9q.275.275.275.7t-.275.7t-.7.275t-.7-.275z" />
         </svg>
       </div>
       <div class="popup-content">
@@ -16,7 +18,7 @@
           </div>
           <div class="form-group">
             <label for="goals">Goals</label>
-            <input  id="goals" v-model="goals" required />
+            <input id="goals" v-model="goals" required />
           </div>
           <div class="form-group">
             <label for="comment">Comment</label>
@@ -43,13 +45,13 @@ export default {
       goals: '',
       comment: '',
       gameId: null,
-      idUser:null,
+      idUser: null,
     };
   },
   mounted() {
     bus.on('prediction', (gameID) => {
-      this.gameId= gameID,
-      this.show = true;
+      this.gameId = gameID,
+        this.show = true;
 
     });
 
@@ -59,28 +61,35 @@ export default {
     closePopup() {
       this.show = false;
     },
+
+
+
     async submitPrediction() {
-    try {
-      const Cookie = VueCookies.get("auth");
+      try {
+        const Cookie = VueCookies.get("auth"); // je veux envoyer ce Cookie avec la requete
+        console.log('cookie frontend', Cookie)
         if (Cookie) {
-            this.idUser = Cookie.id;
+          this.idUser = Cookie.id;
         }
 
 
-      const response = await axios.post('http://localhost:3000/createPredictions', {
-        idGame: this.gameId,
-        idUser:this.idUser,
-        winner: this.winner,
-        goals: this.goals,
-        comment: this.comment,
-      });
+        const response = await axios.post('http://localhost:3000/createPredictions', {
+          idGame: this.gameId,
+          idUser: this.idUser,
+          winner: this.winner,
+          goals: this.goals,
+          comment: this.comment,
+        }, {
+          withCredentials: true,
 
-      console.log('Prédiction créée:', response.data);
-      this.closePopup();
-    } catch (error) {
-      console.error('Erreur lors de la création de la prédiction:', error);
+        });
+
+        console.log('Prédiction créée:', response.data);
+        this.closePopup();
+      } catch (error) {
+        console.error('Erreur lors de la création de la prédiction:', error);
+      }
     }
-  }
   }
 };
 </script>

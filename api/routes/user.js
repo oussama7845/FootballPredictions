@@ -57,8 +57,10 @@ router.post('/createUser', function (req, res) {
 
 });
 
+
+
 // Login authentification
-router.post('/login',async function (req, res) {
+router.post('/login', async function (req, res) {
   try {
     const user = await User.findOne({ where: { email: req.body.email } });
 
@@ -67,37 +69,88 @@ router.post('/login',async function (req, res) {
     }
 
     bcrypt.compare(req.body.password, user.password, function (err, isMatch) {
-      if (err)
+      if (err) {
         return res.status(500).json('Erreur est survenue lors de la vérification du mot de passe');
+      }
       if (!isMatch) {
         return res.status(403).json('Mot de passe incorrect');
       }
 
       let token = jwt.sign(
         {
-          exp: Math.floor(Date.now() + 60 * 1000 * 60 * 876000),
+          exp: Math.floor(Date.now() / 1000) + (60 * 60 * 876000), // expiration en secondes
           id: user.id,
           email: user.email,
           firstname: user.firstname,
           lastname: user.lastname,
-          isAdmin:user.isAdmin,
+          isAdmin: user.isAdmin,
         },
         config.privateKey
       );
+
+      // Définir le cookie avec le jeton
+      res.cookie('auth', token, { httpOnly: true, secure: false });
 
       return res.status(200).json({
         id: user.id,
         email: user.email,
         firstname: user.firstname,
         lastname: user.lastname,
-        isAdmin:user.isAdmin,
+        isAdmin: user.isAdmin,
         token: token,
       });
     });
   } catch (error) {
     console.error(error);
-    return res.status(500).json('Une erreur est survenue lors de la recherche de l\'user');
-}});
+    return res.status(500).json("Une erreur est survenue lors de la recherche de l'user");
+  }
+});
+
+// Login authentification
+
+
+// router.post('/login',async function (req, res) {
+//   try {
+//     const user = await User.findOne({ where: { email: req.body.email } });
+
+//     if (!user) {
+//       return res.status(404).json('user introuvable');
+//     }
+
+//     bcrypt.compare(req.body.password, user.password, function (err, isMatch) {
+//       if (err)
+//         return res.status(500).json('Erreur est survenue lors de la vérification du mot de passe');
+//       if (!isMatch) {
+//         return res.status(403).json('Mot de passe incorrect');
+//       }
+
+//       let token = jwt.sign(
+//         {
+//           exp: Math.floor(Date.now() + 60 * 1000 * 60 * 876000),
+//           id: user.id,
+//           email: user.email,
+//           firstname: user.firstname,
+//           lastname: user.lastname,
+//           isAdmin:user.isAdmin,
+//         },
+//         config.privateKey
+//       );
+
+//       return res.status(200).json({
+//         id: user.id,
+//         email: user.email,
+//         firstname: user.firstname,
+//         lastname: user.lastname,
+//         isAdmin:user.isAdmin,
+//         token: token,
+//       });
+//     });
+//   } catch (error) {
+//     console.error(error);
+//     return res.status(500).json('Une erreur est survenue lors de la recherche de l\'user');
+// }});
+
+
 
 
 

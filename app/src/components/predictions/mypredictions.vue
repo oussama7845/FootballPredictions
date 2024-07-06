@@ -51,7 +51,10 @@ export default {
   methods: {
     async deletePrediction(predictionId) {
       try {
-        const response = await axios.delete(`http://localhost:3000/predictions/${predictionId}`);
+        const response = await axios.delete(`http://localhost:3000/predictions/${predictionId}`, {
+          withCredentials: true,
+
+        });
         if (response.status === 200) {
           // Supprimer localement la prédiction de this.predictions
           this.predictions = this.predictions.filter(prediction => prediction.id !== predictionId);
@@ -64,7 +67,10 @@ export default {
 
     async fetchPredictions() {
       try {
-        const response = await axios.get(`http://localhost:3000/predictions/${this.idUser}`);
+        const response = await axios.get(`http://localhost:3000/predictions/${this.idUser}`, {
+          withCredentials: true,
+
+        });
         this.predictions = response.data;
 
         await this.fetchMatchDetails();
