@@ -48,6 +48,7 @@
           const response = await axios.post('http://localhost:3000/createUser', body)
           if (response.status === 200){ 
             console.log('votre compte est créer')
+            this.$router.push('/signin');
           }else{
             console.log('une erreur est survenue lors de la création de votre compte.')
           }

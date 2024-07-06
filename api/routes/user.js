@@ -33,28 +33,47 @@ router.get('/users', function (req, res) {
 });
 
 
-router.post('/createUser', function (req, res) {
+
+
+// create a new user
+router.post('/createUser', async function (req, res) {
   const { firstname, lastname, email, password } = req.body;
 
-  const newUser = new User({
-    firstname,
-    lastname,
-    email,
-    password,
-    isAdmin: true,
-    securityToken:uuidv4(),
-  });
 
-  newUser
-    .save()
-    .then((createUser) => {
-      res.status(200).json(createUser);
+    // Vérification du format de l'email avec une expression régulière
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      return res.status(400).json({ error: 'Format d\'email invalide' });
+    }
 
-    })
-    .catch(err => {
-      console.log('erreur  :', err)
-    })
+  try {
+    // Vérifier si l'email existe déjà dans la base de données
+    const existingUser = await User.findOne({ where: { email } });
+    if (existingUser) {
+      return res.status(400).json({ error: 'Email déjà utilisé' });
+    }
 
+    // Vérification du mot de passe avec le schéma
+    if (!schema.validate(password)) {
+      return res.status(400).json({ error: 'Le mot de passe ne respecte pas les critères requis' });
+    }
+
+
+    const newUser = await User.create({
+      firstname,
+      lastname,
+      email,
+      password, // Le hashage est géré par le modèle User via les hooks
+      isAdmin: true,
+      securityToken: uuidv4(),
+    });
+
+
+    res.status(200).json(newUser);
+  } catch (error) {
+    console.error('Erreur lors de la création de l\'utilisateur :', error);
+    res.status(500).json({ error: 'Erreur serveur lors de la création de l\'utilisateur' });
+  }
 });
 
 
@@ -105,54 +124,6 @@ router.post('/login', async function (req, res) {
     return res.status(500).json("Une erreur est survenue lors de la recherche de l'user");
   }
 });
-
-// Login authentification
-
-
-// router.post('/login',async function (req, res) {
-//   try {
-//     const user = await User.findOne({ where: { email: req.body.email } });
-
-//     if (!user) {
-//       return res.status(404).json('user introuvable');
-//     }
-
-//     bcrypt.compare(req.body.password, user.password, function (err, isMatch) {
-//       if (err)
-//         return res.status(500).json('Erreur est survenue lors de la vérification du mot de passe');
-//       if (!isMatch) {
-//         return res.status(403).json('Mot de passe incorrect');
-//       }
-
-//       let token = jwt.sign(
-//         {
-//           exp: Math.floor(Date.now() + 60 * 1000 * 60 * 876000),
-//           id: user.id,
-//           email: user.email,
-//           firstname: user.firstname,
-//           lastname: user.lastname,
-//           isAdmin:user.isAdmin,
-//         },
-//         config.privateKey
-//       );
-
-//       return res.status(200).json({
-//         id: user.id,
-//         email: user.email,
-//         firstname: user.firstname,
-//         lastname: user.lastname,
-//         isAdmin:user.isAdmin,
-//         token: token,
-//       });
-//     });
-//   } catch (error) {
-//     console.error(error);
-//     return res.status(500).json('Une erreur est survenue lors de la recherche de l\'user');
-// }});
-
-
-
-
 
 
 

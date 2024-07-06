@@ -7,18 +7,10 @@ const config = require(path.join(__dirname, '..', 'config', 'config.json'))[env]
 const authenticateUser = (req, res, next) => {
   
   try {
-    console.log(1)
+
     const cookie = req.cookies.auth;
-    console.log('string cookie', cookie)
     const authData = JSON.parse(cookie);
-    console.log('authdata', authData)
-
-    console.log(2)
-    console.log('json token ',authData.token )
     const decoded = jwt.verify(authData.token, config.privateKey);
-    console.log(3)
-
-    console.log(decoded);
 
     if (!decoded.isAdmin) {
       return res.status(401).json({ error: 'Unauthorized' });
