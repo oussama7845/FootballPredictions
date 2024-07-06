@@ -38,8 +38,10 @@
           const response = await axios.post('http://localhost:3000/login', body)
           if (response.status === 404){ 
             console.log('User introuvable')
+            alert('User introuvable');
           }else if( response.status === 403){
             console.log('mot de passe incorrect')
+            alert('mot de passe incorrect');
           }else if( response.status === 200){
             Cookie.set("auth", JSON.stringify(response.data));
 

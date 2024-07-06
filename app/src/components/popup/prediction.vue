@@ -14,12 +14,16 @@
         <form @submit.prevent="submitPrediction">
           <div class="form-group">
             <label for="winner">Winner</label>
-            <input type="text" id="winner" v-model="winner" required />
+            <select>
+              <option value="{{team1}}">{{ team1 }}</option>
+              <option value="{{team2}}">{{ team2 }}</option>
+            </select>
           </div>
           <div class="form-group">
             <label for="goals">Goals</label>
-            <input id="goals" v-model="goals" required />
+            <input  id="goals" type="text" v-model="goals"  required />
           </div>
+
           <div class="form-group">
             <label for="comment">Comment</label>
             <textarea id="comment" v-model="comment" required></textarea>
@@ -46,14 +50,19 @@ export default {
       comment: '',
       gameId: null,
       idUser: null,
+      team1: '',
+      team2: '',
     };
   },
   mounted() {
     bus.on('prediction', (gameID) => {
       this.gameId = gameID,
         this.show = true;
+      this.getteams(gameID);
+
 
     });
+
 
 
   },
@@ -62,23 +71,56 @@ export default {
       this.show = false;
     },
 
+    async getteams(gameID) {
+      try {
+        const response = await axios.get(`http://localhost:3000/game/${gameID}`);
 
+        if (response) {
+
+          this.team1 = response.data.team1;
+          this.team2 = response.data.team2;
+        }
+      } catch (err) {
+        console.log(err)
+      }
+    },
+      // Validation des buts dans le format nombre-nombre
+
+    validateGoals(goal) {
+      const goalsPattern = /^\d+-\d+$/;
+        return (goalsPattern.test(goal));
+
+    },
+      // Filtrer les caractères spéciaux qui pourraient être utilisés dans du code JavaScript
+    sanitizeComment(comment) {
+      const newcomment = comment.replace(/[<>]/g, '');
+      return newcomment;
+    },
 
     async submitPrediction() {
+
+        if (!this.validateGoals(this.goals)){
+          alert('Le format des buts doit être nombre-nombre, par exemple 1-0.');
+          this.goals = '';
+          return;
+
+        }
+
+
       try {
         const Cookie = VueCookies.get("auth"); // je veux envoyer ce Cookie avec la requete
         console.log('cookie frontend', Cookie)
         if (Cookie) {
           this.idUser = Cookie.id;
         }
-
+        const comment = this.sanitizeComment(this.comment);
 
         const response = await axios.post('http://localhost:3000/createPredictions', {
           idGame: this.gameId,
           idUser: this.idUser,
           winner: this.winner,
           goals: this.goals,
-          comment: this.comment,
+          comment: comment,
         }, {
           withCredentials: true,
 

@@ -49,8 +49,14 @@
           if (response.status === 200){ 
             console.log('votre compte est créer')
             this.$router.push('/signin');
-          }else{
+          }else if (response.status === 400 ){
+            alert('format d email ou mot de passe invalide')
+          }else if(response.status === 405){
+            alert('Email déjà utilisé')
+          }
+          else{
             console.log('une erreur est survenue lors de la création de votre compte.')
+
           }
 
 

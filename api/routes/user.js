@@ -50,7 +50,7 @@ router.post('/createUser', async function (req, res) {
     // Vérifier si l'email existe déjà dans la base de données
     const existingUser = await User.findOne({ where: { email } });
     if (existingUser) {
-      return res.status(400).json({ error: 'Email déjà utilisé' });
+      return res.status(405).json({ error: 'Email déjà utilisé' });
     }
 
     // Vérification du mot de passe avec le schéma
